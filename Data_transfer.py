@@ -5,7 +5,14 @@ Data_path = 'Data/PetImages'
 Train_path = 'Data/train'
 Test_path = 'Data/test'
 
+os.mkdir(Train_path)
+os.mkdir(Test_path)
+
 Labels_list = os.listdir(Data_path)
+
+for label in Labels_list:
+    os.mkdir(os.path.join(Train_path, label))
+    os.mkdir(os.path.join(Test_path, label))
 
 test_size = 2490
 
@@ -23,4 +30,4 @@ for label in Labels_list:
     for item in os.listdir(p):
         shutil.move(os.path.join(p, item), os.path.join(Train_path, label, item))
 
-os.rmdir(Data_path)
+shutil.rmtree(Data_path, ignore_errors=True)
