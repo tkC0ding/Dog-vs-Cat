@@ -36,18 +36,27 @@ model.add(tf.keras.layers.Dense(1, activation='sigmoid'))
 
 print(model.summary())
 
-callbacks = tf.keras.callbacks.EarlyStopping(
-    monitor='val_loss',
-    min_delta=0.01,
-    patience=2,
-    verbose=1,
-    mode='min',
-    baseline=None,
-    restore_best_weights=True
-)
-
 #Compile model
 model.compile(optimizer = 'adam', loss = 'binary_crossentropy', metrics=['accuracy'])
 
 #Model Training
-history = model.fit(x_train, y_train, epochs=100, batch_size=42, validation_split=0.2)
+history = model.fit(x_train, y_train, epochs=25, batch_size=32, validation_split=0.2)
+
+epochs = list(range(1,26))
+
+fig, ax = plt.subplots(1, 2, figsize=(35, 30))
+ax[0].plot(epochs, history.history['accuracy'], label='accuracy')
+ax[0].plot(epochs, history.history['val_accuracy'], label='validation')
+ax[0].set_xlabel('epochs')
+ax[0].set_ylabel('accuracy')
+ax[0].set_title('Accuracy')
+ax[0].legend()
+
+ax[1].plot(epochs, history.history['loss'], label='loss')
+ax[1].plot(epochs, history.history['val_loss'], label='validation')
+ax[1].set_xlabel('epochs')
+ax[1].set_ylabel('loss')
+ax[1].set_title('Loss')
+ax[1].legend()
+
+fig.show()
