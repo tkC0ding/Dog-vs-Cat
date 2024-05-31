@@ -1,13 +1,16 @@
+# Imporrt libraries
 import os
 import cv2
 import numpy as np
 import random
 
+# Define variables
 DATA_PATH = 'Data/PetImages'
 CATEGORIES = os.listdir(DATA_PATH)
 PREPROCESS_DATA_PATH = 'Data/Preprocessed'
 IMG_SIZE = 50
 
+# Load data into a list
 training_data = []
 def preprocess_data():
     for category in CATEGORIES:
@@ -22,8 +25,10 @@ def preprocess_data():
                 pass
         print('preproess complete for category :', category)
 
+# Call function
 preprocess_data()
 
+# shuffle and divide data into features and labels
 random.shuffle(training_data)
 
 X = []
@@ -33,6 +38,7 @@ for item in training_data:
     X.append(item[0])
     Y.append(item[1])
 
+# Create directory and save data
 features = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1)
 labels = np.array(Y)
 
